@@ -1,11 +1,11 @@
 build:
   docker:
     web: Dockerfile
+  packages:
+    - maven
+    - node
   config:
     JVM_TARGET: 11
-  maven:
-    goals:
-      - clean install
 release:
   image: web
   command:
