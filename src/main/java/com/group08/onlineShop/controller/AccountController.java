@@ -26,6 +26,7 @@ public class AccountController {
     private final CustomerInfoService customerInfoService;
     @GetMapping("/")
     public String welcome(){
+        
         return "Hello";
     }
 
