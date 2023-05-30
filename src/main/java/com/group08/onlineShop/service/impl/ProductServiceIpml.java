@@ -109,8 +109,8 @@ public class ProductServiceIpml implements ProductService {
         return productUpdate;
     }
     @Override
-    public List<Product> suggestProduct(ProductReq productReq) throws ResourceNotFoundException {
-        Product product = findById(productReq.getId());
+    public List<Product> suggestProduct(Long  id) throws ResourceNotFoundException {
+        Product product = findById(id);
         List<Product> productAll = findAll();
         List<Product> sugProd = new ArrayList<>();
         productAll.forEach(

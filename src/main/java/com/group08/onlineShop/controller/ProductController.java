@@ -51,9 +51,9 @@ public class ProductController {
         }
     }
     @GetMapping("/suggest-product")
-    public ResponseEntity<?> suggestProduct(@RequestBody ProductReq productReq) {
+    public ResponseEntity<?> suggestProduct(@RequestParam Long id) {
         try {
-            return ResponseEntity.ok(new ApiResponse(true, "Success", HttpStatus.OK.value(), productService.suggestProduct(productReq)));
+            return ResponseEntity.ok(new ApiResponse(true, "Success", HttpStatus.OK.value(), productService.suggestProduct(id)));
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(false, e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }

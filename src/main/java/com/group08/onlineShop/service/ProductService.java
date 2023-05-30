@@ -14,7 +14,7 @@ public interface ProductService {
     Product saveNewProduct(ProductReq productReq, List<MultipartFile> productImageReqs, String color, Integer isDefault);
 
     Product findById(Long productId) throws ResourceNotFoundException;
-    List<Product> suggestProduct(ProductReq productReq) throws ResourceNotFoundException;
+    List<Product> suggestProduct(Long id) throws ResourceNotFoundException;
 
     List<Product> filterProduct(String keyword) throws ResourceNotFoundException;
 
