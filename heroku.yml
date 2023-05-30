@@ -5,7 +5,7 @@ build:
     - maven
     - node
 config:
-    JVM_TARGET: 11
+  JVM_TARGET: 11
 release:
   image: web
   command:
