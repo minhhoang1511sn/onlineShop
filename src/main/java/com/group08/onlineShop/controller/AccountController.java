@@ -24,6 +24,10 @@ public class AccountController {
 
     private final AuthenticationService authenticationService;
     private final CustomerInfoService customerInfoService;
+    @GetMapping("/")
+    public String welcome(){
+        return "Hello";
+    }
 
     @PostMapping("/account/password/reset")
     public ResponseEntity<?> resetPassword(@RequestParam(name = "username") String username,
