@@ -10,6 +10,7 @@ import com.group08.onlineShop.model.Account;
 import com.group08.onlineShop.model.Address;
 import com.group08.onlineShop.model.CustomerInfo;
 import com.group08.onlineShop.repository.AccountRepo;
+import com.group08.onlineShop.repository.AddressRepo;
 import com.group08.onlineShop.repository.CustomerInfoRepo;
 import com.group08.onlineShop.service.CustomerInfoService;
 import com.group08.onlineShop.utils.Utils;
@@ -25,6 +26,7 @@ import java.util.List;
 public class CustomerInfoServiceImpl implements CustomerInfoService {
     private final CustomerInfoRepo customerInfoRepo;
     private final AccountRepo accountRepo;
+    private final AddressRepo addressRepo;
     @Override
     public List<CustomerInfoResponse> getAllCustomerInfo() {
         List<CustomerInfo> customerInfos = customerInfoRepo.findAll();
@@ -112,18 +114,30 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
         return accountRepo.getReferenceById(Utils.getIdCurrentUser());
     }
 
+    public Address updateAddress(Address address){
+        Address addr = new Address();
+        addr.setCity(address.getCity());
+        addr.setState(address.getState());
+        addr.setDetailAddress(address.getDetailAddress());
+        addr.setCountry(address.getCountry());
+        addressRepo.save(addr);
+        return addr;
+    }
     @Override
     public Account updateAccount(AccountRequestDTO accountRequestDTO) throws ResourceNotFoundException {
-        if(Utils.getIdCurrentUser() == accountRequestDTO.getId())
+        Long curUse = Utils.getIdCurrentUser();
+        Account account = accountRepo.findAccountByEmail(accountRequestDTO.getEmail()).orElseThrow();
+        if( curUse == account.getId())
         {
-            Account account = accountRepo.findById(accountRequestDTO.getId()).orElseThrow();
             if (account != null) {
                 account.setActive(accountRequestDTO.getActive());
                 account.setEmail(accountRequestDTO.getEmail());
                 account.setFirstName(accountRequestDTO.getFirstName());
                 account.setLastName(accountRequestDTO.getLastName());
                 account.setRole(accountRequestDTO.getRole());
-                account.setAddress(accountRequestDTO.getAddress());
+                account.setAddress(updateAddress(accountRequestDTO.getAddress()));
+                account.setPhoneNumber(accountRequestDTO.getPhoneNumber());
+                account.setCustomerName(accountRequestDTO.getCustomerName());
                 accountRepo.save(account);
                 return account;
             }
